@@ -21,6 +21,11 @@ setup(
     entry_points={
         'console_scripts': [
             'direct_coordinate = rover_motion.direct_coordinate:main',
+            'accurate_odo = rover_motion.accurate_odo:main',
+            'check = rover_motion.check:main',
+            'motion_node = rover_motion.motion_node:main',
+            'newcontrol = rover_motion.newcontrol:main',
+            'speech_movement = rover_motion.speech_movement:main',
             'swim_to_goal = rover_motion.swim_to_goal:main',
             'control_node = rover_motion.control_node:main',
             'serial_com = rover_motion.serial_com:main',

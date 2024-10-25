@@ -48,7 +48,7 @@ def main(args=None):
                 control_node.publish_twist(0.0, -1.0)  
                 print(f"You pressed {button}. Move right.\n Press 'w' to move forward, 's' to move backward, 'a' to turn right, 'd' to turn left and press 'q' to exit.")
             elif button == 'q' or button == 'Q':
-                #control_node.publish_twist(1.0, 1.0) 
+                control_node.publish_twist(1.0, 1.0) 
                 print("You exited by pressing 'q'. Good bye.")
                 break 
 

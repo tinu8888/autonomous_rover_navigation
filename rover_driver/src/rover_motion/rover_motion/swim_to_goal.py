@@ -1,3 +1,5 @@
+#Shivam working latest June 5th 11:30
+
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Pose
@@ -25,18 +27,19 @@ class Swim_To_Goal(Node):
         self.x2 = float(input("x_goal: "))
         self.y2 = float(input("y_goal: "))
         if self.x2>0.0:
-            self.x2 = self.x2 % 51
+            self.x2 = self.x2 % 50
         else:
-            self.x2 = abs(self.x2) %51
+            self.x2 = abs(self.x2) % 50
             self.x2 = -self.x2
         if self.y2>0.0:
-            self.y2 = self.y2 % 51
+            self.y2 = self.y2 % 50
         else:
-            self.y2 = abs(self.y2)/51
+            self.y2 = abs(self.y2) % 50
             self.y2 = -self.y2
         goal_data = Pose()
         goal_data.position.x = self.x2
         goal_data.position.y = self.y2
+        print(goal_data)
         #goal_data.orientation.z = self.theta
         self.pose_publisher_.publish(goal_data)
 

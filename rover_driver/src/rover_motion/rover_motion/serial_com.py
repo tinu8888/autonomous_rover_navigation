@@ -3,10 +3,9 @@ from rclpy.node import Node
 from geometry_msgs.msg import Twist, Pose, Point, Quaternion
 import serial
 
-#sabertooth_serial = serial.Serial('/dev/ttyTHS0', 9600, timeout=1)
+sabertooth_serial = serial.Serial('/dev/ttyTHS0', 9600, timeout=1)
 #sabertooth_serial = serial.Serial('/dev/pts/5', 9600, timeout=1)
-sabertooth_serial = serial.Serial('/dev/ttyS0', 9600, timeout=1)
-
+#sabertooth_serial = serial.Serial('/dev/pts/0', 9600, timeout=1)
 
 class Rover_Movement(Node):
     pose_x=0.0
@@ -44,12 +43,7 @@ class Rover_Movement(Node):
         serial_port.write(self.packet)
         print(f"Sent command to Sabertooth: Address: {address}, Command: {command}, Value: {int(value)}, Checksum: {self.checksum}")
         
-    def stop_motors(self):
-        """Send stop command to all motors."""
-        for address in [128, 129]:
-            for command in [0, 1, 4, 5]:
-                self.send_sabertooth_command(sabertooth_serial, address, command, 0)
-        print("Motors stopped.")
+
 
     def cmd_callback(self, msg):
         print("cmd received!!!")
@@ -111,8 +105,8 @@ class Rover_Movement(Node):
         elif (msg.linear.x == 0.0 and msg.angular.z != 0.0):
             #For right motion
             if(msg.angular.z > 0.0):
-                self.left_side = int(abs(msg.angular.z))
-                self.right_side = -int(abs(msg.angular.z))
+                self.left_side = -int(abs(msg.angular.z))
+                self.right_side = int(abs(msg.angular.z))
                 self.main_left = int(self.main_left + self.left_side)
                 self.main_right =  int(self.main_right + self.right_side)
                 self.main_left = max(min(self.main_left, 127), -127)
@@ -138,8 +132,8 @@ class Rover_Movement(Node):
                 
             else :
                 #for Left motion
-                self.left_side = -int(abs(msg.angular.z))
-                self.right_side = int(abs(msg.angular.z))
+                self.left_side = int(abs(msg.angular.z))
+                self.right_side = -int(abs(msg.angular.z))
                 self.main_left =  int(self.main_left + self.left_side)
                 self.main_right = int(self.main_right + self.right_side)
                 self.main_left = max(min(self.main_left, 127), -127)
@@ -165,11 +159,11 @@ class Rover_Movement(Node):
                
 
         else :
-            for address in [129,129]:
+            for address in [128,129]:
                 for command in [0,1,4,5]:
                     self.send_sabertooth_command(sabertooth_serial, address, command, 0)
             
-            for address in [129,129]:
+            for address in [128,129]:
                 for command in [0,1,4,5]:
                     self.send_sabertooth_command(sabertooth_serial, address, command, 0)
 
@@ -178,14 +172,9 @@ class Rover_Movement(Node):
 def main(args=None):
     rclpy.init(args=args)
     serial_com = Rover_Movement()
-    try:
-        rclpy.spin(serial_com)
-    except KeyboardInterrupt:
-        serial_com.stop_motors()
-        print("Keyboard Interrupt detected. Stopping motors.")
-    finally:
-        serial_com.destroy_node()
-        rclpy.shutdown()
+    rclpy.spin(serial_com)
+    serial_com.destroy_node()
+    rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
