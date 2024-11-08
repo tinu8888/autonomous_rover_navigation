@@ -3,8 +3,8 @@ from rclpy.node import Node
 from geometry_msgs.msg import Twist, Pose, Point, Quaternion
 import serial
 
-sabertooth_serial = serial.Serial('/dev/ttyTHS0', 9600, timeout=1)
-#sabertooth_serial = serial.Serial('/dev/pts/5', 9600, timeout=1)
+sabertooth_serial = serial.Serial('/dev/ttyS0', 9600, timeout=1)
+#sabertooth_serial = serial.Serial('/dev/ttyTHS0', 9600, timeout=1)
 #sabertooth_serial = serial.Serial('/dev/pts/0', 9600, timeout=1)
 
 class Rover_Movement(Node):

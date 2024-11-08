@@ -30,6 +30,8 @@ setup(
             'control_node = rover_motion.control_node:main',
             'serial_com = rover_motion.serial_com:main',
             'odom_node = rover_motion.odom_node:main',
+            'gps_loc = rover_motion.gps_loc:main',
+            'coordinate_gps = rover_motion.coordinate_gps:main',
         ],
     },
 )
