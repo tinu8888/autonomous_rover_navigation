@@ -10,8 +10,8 @@ from geometry_msgs.msg import Twist
 chunk = 1024  # Record in chunks of 1024 samples
 sample_format = pyaudio.paInt16  # 16 bits per sample
 channels = 1
-fs = 44100  # Record at 44100 samples per second, works on pc
-#fs = 8000	# Works on raspberry pi
+#fs = 44100  # Record at 44100 samples per second, works on pc
+fs = 8000	# Works on raspberry pi
 seconds = 3
 filename = "output.wav"
 
